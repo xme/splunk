@@ -1,27 +1,23 @@
-MISP Docker
-===========
+getiocmisp
+==========
 
-The files in this repository are used to create a Docker container running a [MISP](http://www.misp-project.org) ("Malware Information Sharing Platform") instance.
+getiocmisp is a Splunk custom search command that helps to extract IOCs from a MISP instance.
 
-I  rewrote the Docker file to split the components in multiple containers (which is more in the philosophy of Docker).
+getiocmisp relies on PyMISP. PyMISP requires Python 3 but only Python 2.7 is available in the Splunk environment. That's what the script getiocmips.py is a wrapper and calls get-ioc-misp.py. This is best to keep your Splunk instance clean.
 
-The MISP container needs at least a MySQL container to store the data. By default it listen to port 80. I highly recommend to serve it behind a NGinx or Apache reverse proxy.
+Prerequisites
+=============
+1. Install Python 3 on the Splunk server
+2. Install PyMISP ((see https://github.com/CIRCL/PyMISP)
 
-The build is based on Ubuntu and will install all the required components. The following configuration steps are performed automatically:
-* Reconfiguration of the base URL in `config.php`
-* Generation of a new salt in `config.php`
-* Generation of a self-signed certificate
-* Optimization of the PHP environment (php.ini) to match the MISP recommended values
-* Creation of the MySQL database
-* Generation of the admin PGP key
+Installation
+============
 
-# Building the image
+1. Copy get-ioc-misp.py & mispconfig.py in /usr/local/bin
 
-```
-# git clone https://github.com/xme/misp-docker
-# cd misp-docker
-# docker build -t misp .
-```
+2. Edit mispconfig.py and specify your MISP URL and authorization key
 
-# Running the image
-Use the docker-compose file provided as example.
+3. Copy getiocmisp.py in /opt/splunk/etc/apps/<yourapp>/bin/
+
+4. Copy the commands.conf or change the existing one in /opt/splunk/etc/apps/<yourapp>/local/
+
