@@ -11,7 +11,7 @@ The script getiocmips.py is a wrapper and calls get-ioc-misp.py. This is best to
 Prerequisites
 =============
 1. Install Python 3 on the Splunk server
-2. Install PyMISP (see https://github.com/CIRCL/PyMISP)
+2. Install PyMISP (see https://github.com/MISP/PyMISP)
 
 Installation
 ============
